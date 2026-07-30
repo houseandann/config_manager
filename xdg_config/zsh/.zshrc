@@ -1,150 +1,73 @@
-# If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:/usr/local/bin:/$HOME/.cargo/bin:$PATH:/usr/local/go/bin
+# Extra PATH entries (cargo is handled in .zshenv)
+export PATH="${HOME}/bin:/usr/local/bin:/usr/local/go/bin:${PATH}"
 
-# Path to your oh-my-zsh installation.
-#export ZSH="/home/$USERNAME/.oh-my-zsh"
-export ZSH="$XDG_DATA_HOME"/oh-my-zsh
+# Oh My Zsh — installed to XDG_DATA_HOME by deploy.sh
+export ZSH="${XDG_DATA_HOME}/oh-my-zsh"
 
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-#ZSH_THEME="ys"
+# Starship handles the prompt; leave OMZ theme empty
+export ZSH_THEME=""
 
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in $ZSH/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
-
-# Uncomment the following line to use case-sensitive completion.
 CASE_SENSITIVE="true"
 
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
+# zsh-syntax-highlighting must be the last plugin
+plugins=(git zsh-autosuggestions command-not-found zsh-syntax-highlighting)
 
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=006,bg=cyan,bold,underline"
 
-# Uncomment the following line to automatically update without prompting.
-# DISABLE_UPDATE_PROMPT="true"
+if [[ -r "${ZSH}/oh-my-zsh.sh" ]]; then
+  source "${ZSH}/oh-my-zsh.sh"
+else
+  echo "oh-my-zsh not found at ${ZSH}. Run deploy.sh to install it." >&2
+fi
 
-# Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
-
-# Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS="true"
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-# Which plugins would you like to load?
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions command-not-found)
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=006, bg=cyan,bold,underline"
-source $ZSH/oh-my-zsh.sh
-# bindkey should be placed after source $ZSH/oh-my-zsh.sh
 bindkey ',' autosuggest-accept
 
-# Starship 
-eval "$(starship init zsh)"
-# set Starship PATH
-export STARSHIP_CONFIG=$HOME/.config/starship/starship.toml
-
-
-# User configuration
-extract () {
-     if [ -f $1 ] ; then
-         case $1 in
-             *.tar.bz2)   tar xjf $1        ;;
-             *.tar.gz)    tar xzf $1     ;;
-             *.bz2)       bunzip2 $1       ;;
-             *.rar)       rar x $1     ;;
-             *.gz)        gunzip $1     ;;
-             *.tar)       tar xf $1        ;;
-             *.tbz2)      tar xjf $1      ;;
-             *.tgz)       tar xzf $1       ;;
-             *.zip)       unzip $1     ;;
-             *.Z)         uncompress $1  ;;
-             *.7z)        7z x $1    ;;
-             *)           echo "'$1' cannot be extracted via extract()" ;;
-         esac
-     else
-         echo "'$1' is not a valid file"
-     fi
-}
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-export LESS=ixFR
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-alias fd=fdfind
-if ! type eza >/dev/null 2>&1; then
-    alias ls="ls -a --color=auto"
-else
-    alias ls="eza -g -a --icons"
+# Prompt
+if command -v starship >/dev/null 2>&1; then
+  export STARSHIP_CONFIG="${XDG_CONFIG_HOME}/starship/starship.toml"
+  eval "$(starship init zsh)"
 fi
-alias ll="ls -l"
-alias vi="nvim"
-export EDITOR='vi'
+
+# History
 setopt no_share_history
 unsetopt share_history
-
 setopt HIST_FIND_NO_DUPS
-# following should be turned off, if sharing history via setopt SHARE_HISTORY
 setopt INC_APPEND_HISTORY
-# source ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source $ZSH/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+export LESS=ixFR
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+source "${ZDOTDIR}/aliases.zsh"
+
+# nvm — lazy-loaded to keep shell startup fast
+export NVM_DIR="${HOME}/.nvm"
+if [[ -s "${NVM_DIR}/nvm.sh" ]]; then
+  nvm() {
+    unset -f nvm
+    # shellcheck source=/dev/null
+    source "${NVM_DIR}/nvm.sh"
+    nvm "$@"
+  }
+  node() {
+    unset -f node nvm
+    # shellcheck source=/dev/null
+    source "${NVM_DIR}/nvm.sh"
+    node "$@"
+  }
+  npm() {
+    unset -f npm nvm
+    # shellcheck source=/dev/null
+    source "${NVM_DIR}/nvm.sh"
+    npm "$@"
+  }
+fi
+
+# fzf — prefer XDG install path, fall back to legacy ~/.fzf.zsh
+if [[ -f "${XDG_DATA_HOME}/fzf/shell/completion.zsh" ]]; then
+  source "${XDG_DATA_HOME}/fzf/shell/completion.zsh"
+  source "${XDG_DATA_HOME}/fzf/shell/key-bindings.zsh"
+elif [[ -f "${HOME}/.fzf.zsh" ]]; then
+  source "${HOME}/.fzf.zsh"
+fi
+
+# Machine-specific overrides (not tracked in git)
+[[ -f "${ZDOTDIR}/local.zsh" ]] && source "${ZDOTDIR}/local.zsh"

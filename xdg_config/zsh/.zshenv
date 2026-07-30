@@ -1,13 +1,23 @@
-source "$HOME/.cargo/env"
+# XDG Base Directory Specification
+# https://specifications.freedesktop.org/basedir-spec/latest/
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
 
-export XDG_CONFIG_HOME=$HOME/.config
-export XDG_DATA_HOME=$HOME/.local/share
-export XDG_BIN_HOME=$HOME/.local/bin
-export XDG_LIB_HOME=$HOME/.local/lib
-export XDG_CACHE_HOME=$HOME/.cache
-export XDG_STATE_HOME=$HOME/.local/state
-export PATH="$XDG_BIN_HOME:$PATH"
+export PATH="${HOME}/.local/bin:${PATH}"
 
-export HISTFILE="$XDG_STATE_HOME"/zsh/history
+# History (state dir, not config dir)
+export HISTFILE="${XDG_STATE_HOME}/zsh/history"
+export HISTSIZE=50000
+export SAVEHIST=50000
+
+# Default editor
+export EDITOR="${EDITOR:-nvim}"
+export VISUAL="${EDITOR}"
+
+# Rust toolchain (optional)
+[[ -f "${HOME}/.cargo/env" ]] && source "${HOME}/.cargo/env"
+
 export CLICOLOR=1
 export LSCOLORS=ExGxBxDxCxEgEdxbxgxcxd

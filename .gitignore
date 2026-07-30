@@ -1,0 +1,6 @@
+# zsh runtime files
+xdg_config/zsh/.zcompdump*
+xdg_config/zsh/local.zsh
+
+# backups created by deploy.sh
+*.bak.*

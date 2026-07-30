@@ -1,0 +1,3 @@
+# Copy to local.zsh for machine-specific settings (local.zsh is gitignored).
+#
+# export MY_VAR="value"
