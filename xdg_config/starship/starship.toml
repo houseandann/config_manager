@@ -1,5 +1,7 @@
 
 format = """
+$username\
+$hostname\
 $directory\
 $git_branch\
 $git_status\
@@ -28,6 +30,12 @@ symbol = " "
 
 [dart]
 symbol = " "
+
+[username]
+show_always = true
+format = "[$user]($style)[@](bold green)"
+style_user = "bold green"
+style_root = "bold red"
 
 [directory]
 style = 'bold blue'
