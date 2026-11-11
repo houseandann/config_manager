@@ -4,3 +4,10 @@ xdg_config/zsh/local.zsh
 
 # backups created by deploy.sh
 *.bak.*
+
+# nvim generated state
+xdg_config/nvim/lazy-lock.json
+xdg_config/nvim/lazyvim.json
+
+# tmux plugins (managed by tpm)
+xdg_config/tmux/plugins/

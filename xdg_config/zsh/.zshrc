@@ -1,5 +1,5 @@
 # Extra PATH entries (cargo is handled in .zshenv)
-export PATH="${HOME}/bin:/usr/local/bin:/usr/local/go/bin:${PATH}"
+export PATH="${HOME}/.opencode/bin:${HOME}/bin:/usr/local/bin:/usr/local/go/bin:${PATH}"
 
 # Oh My Zsh — installed to XDG_DATA_HOME by deploy.sh
 export ZSH="${XDG_DATA_HOME}/oh-my-zsh"
@@ -12,7 +12,7 @@ CASE_SENSITIVE="true"
 # zsh-syntax-highlighting must be the last plugin
 plugins=(git zsh-autosuggestions command-not-found zsh-syntax-highlighting)
 
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=006,bg=cyan,bold,underline"
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=244"
 
 if [[ -r "${ZSH}/oh-my-zsh.sh" ]]; then
   source "${ZSH}/oh-my-zsh.sh"

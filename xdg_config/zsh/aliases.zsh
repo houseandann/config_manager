@@ -5,6 +5,7 @@ fi
 
 # eza renames several GNU ls short flags. Use functions so flags like
 # "ll -t" / "ls -lt" map to eza's --sort=modified instead of erroring.
+unalias ls ll la lt ltr 2>/dev/null
 if command -v eza >/dev/null 2>&1; then
   _eza_map_flags() {
   local -a mapped=()
@@ -83,7 +84,7 @@ if command -v eza >/dev/null 2>&1; then
   _eza_long=$long
   }
 
-  ls() {
+  function ls {
     _eza_map_flags "$@"
     if (( _eza_long )); then
       eza -l -g -a --icons "${_eza_mapped[@]}"
@@ -92,12 +93,12 @@ if command -v eza >/dev/null 2>&1; then
     fi
   }
 
-  ll() {
+  function ll {
     _eza_map_flags "$@"
     eza -l -g -a --icons "${_eza_mapped[@]}"
   }
 
-  la() { ls -la "$@" }
+  function la { ls -la "$@" }
   lt() { ls -lt "$@" }
   ltr() { ls -ltr "$@" }
 else
